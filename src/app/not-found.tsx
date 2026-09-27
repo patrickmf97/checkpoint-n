@@ -1,0 +1,1 @@
+export default function NotFound(){return <main className="notFound"><b>404</b><h1>Checkpoint não encontrado.</h1><p>Essa página saiu da pista ou ainda não existe.</p><a href="/">Voltar ao início</a></main>}
