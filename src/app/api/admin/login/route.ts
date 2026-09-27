@@ -1,0 +1,2 @@
+import {NextResponse} from "next/server";import {setAdmin} from "@/lib/admin";import crypto from "crypto";
+export async function POST(req:Request){const f=await req.formData();const supplied=String(f.get("password")||"");const expected=process.env.ADMIN_PASSWORD||"";const ok=expected&&supplied.length===expected.length&&crypto.timingSafeEqual(Buffer.from(supplied),Buffer.from(expected));if(!ok)return NextResponse.redirect(new URL("/admin/login?error=1",req.url),303);await setAdmin();return NextResponse.redirect(new URL("/admin",req.url),303)}
