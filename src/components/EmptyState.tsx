@@ -1,0 +1,1 @@
+export function EmptyState({title}:{title:string}){return <div className="empty"><b>{title}</b><p>Estamos preparando conteúdo original para esta área. Volte em breve.</p></div>}
