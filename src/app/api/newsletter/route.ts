@@ -1,0 +1,2 @@
+import {NextResponse} from "next/server";import {db} from "@/lib/db";
+export async function POST(req:Request){const data=await req.formData();const email=String(data.get("email")||"").trim().toLowerCase();if(!/^\S+@\S+\.\S+$/.test(email))return NextResponse.json({error:"E-mail inválido"},{status:400});const sql=db();await sql`INSERT INTO newsletter_subscribers (email) VALUES (${email}) ON CONFLICT (email) DO UPDATE SET status='active'`;return NextResponse.redirect(new URL("/?newsletter=ok",req.url),303);}
