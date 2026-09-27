@@ -1,0 +1,4 @@
+import "./globals.css";
+import type { Metadata } from "next";
+export const metadata: Metadata={title:{default:"Checkpoint N",template:"%s | Checkpoint N"},description:"Notícias, guias, jogos e ofertas para quem vive o universo Nintendo."};
+export default function RootLayout({children}:{children:React.ReactNode}){return <html lang="pt-BR"><body><header className="header"><a className="brand" href="/"><span>CHECKPOINT</span><b>N</b></a><nav><a href="/noticias">Notícias</a><a href="/jogos">Jogos</a><a href="/guias">Guias</a><a href="/ofertas">Ofertas</a></nav></header>{children}<footer><strong>CHECKPOINT N</strong><p>Veículo independente sobre games. Não possui vínculo, patrocínio ou associação com a Nintendo.</p></footer></body></html>}
