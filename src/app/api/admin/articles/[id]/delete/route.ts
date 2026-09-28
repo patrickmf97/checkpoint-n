@@ -1,2 +1,2 @@
 import {NextResponse} from "next/server";import {isAdmin} from "@/lib/admin";import {db} from "@/lib/db";
-export async function POST(req:Request,{params}:{params:Promise<{id:string}>}){if(!await isAdmin())return NextResponse.json({error:"Não autorizado"},{status:401});const {id}=await params;const sql=db();await sql`DELETE FROM articles WHERE id=${id}`;return NextResponse.redirect(new URL("/admin",req.url),303)}
+export async function POST(req:Request,{params}:{params:Promise<{id:string}>}){if(!await isAdmin())return NextResponse.json({error:"Não autorizado"},{status:401});const {id}=await params;const sql=db();await sql`DELETE FROM articles WHERE id=${id}`;return NextResponse.redirect(new URL("/admin",process.env.NEXT_PUBLIC_SITE_URL||req.url),303)}
