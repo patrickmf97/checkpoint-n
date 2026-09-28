@@ -12,7 +12,8 @@ const imageFrom = (html, base) => {
   const m=html.match(/<meta[^>]+property=["']og:image(?::secure_url)?["'][^>]+content=["']([^"']+)/i)||html.match(/<meta[^>]+content=["']([^"']+)["'][^>]+property=["']og:image/i);
   return m?.[1]?abs(decode(m[1]),base):null;
 };
-const descriptionFrom=(html)=>decode((html.match(/<meta[^>]+(?:property|name)=["\'](?:og:description|description)["\'][^>]+content=["\']([^"\']+)/i)||[])[1]||"");\nconst dateFrom = (html) => (html.match(/<meta[^>]+(?:property|name)=["'](?:article:published_time|date|datePublished)["'][^>]+content=["']([^"']+)/i)||[])[1]||null;
+const descriptionFrom = (html) => decode((html.match(/<meta[^>]+(?:property|name)=["'](?:og:description|description)["'][^>]+content=["']([^"']+)/i)||[])[1]||"");
+const dateFrom = (html) => (html.match(/<meta[^>]+(?:property|name)=["'](?:article:published_time|date|datePublished)["'][^>]+content=["']([^"']+)/i)||[])[1]||null;
 
 const sources = await sql`SELECT id,name,url FROM editorial_sources WHERE active=true ORDER BY name`;
 let discovered=0, inserted=0, withImage=0;
