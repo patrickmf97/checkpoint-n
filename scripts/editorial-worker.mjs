@@ -12,7 +12,7 @@ const imageFrom = (html, base) => {
   const m=html.match(/<meta[^>]+property=["']og:image(?::secure_url)?["'][^>]+content=["']([^"']+)/i)||html.match(/<meta[^>]+content=["']([^"']+)["'][^>]+property=["']og:image/i);
   return m?.[1]?abs(decode(m[1]),base):null;
 };
-const dateFrom = (html) => (html.match(/<meta[^>]+(?:property|name)=["'](?:article:published_time|date|datePublished)["'][^>]+content=["']([^"']+)/i)||[])[1]||null;
+const descriptionFrom=(html)=>decode((html.match(/<meta[^>]+(?:property|name)=["\'](?:og:description|description)["\'][^>]+content=["\']([^"\']+)/i)||[])[1]||"");\nconst dateFrom = (html) => (html.match(/<meta[^>]+(?:property|name)=["'](?:article:published_time|date|datePublished)["'][^>]+content=["']([^"']+)/i)||[])[1]||null;
 
 const sources = await sql`SELECT id,name,url FROM editorial_sources WHERE active=true ORDER BY name`;
 let discovered=0, inserted=0, withImage=0;
@@ -33,10 +33,10 @@ for (const source of sources) {
         if(!page.ok)continue;
         const body=await page.text(), title=titleFrom(body);
         if(!title||title.length<8)continue;
-        const image=imageFrom(body,url), published=dateFrom(body);
+        const image=imageFrom(body,url), published=dateFrom(body), description=descriptionFrom(body);
         const fingerprint=crypto.createHash("sha256").update(url).digest("hex");
         const rows=await sql`INSERT INTO editorial_inbox(source_id,source_url,source_title,source_published_at,fingerprint,status,notes)
-          VALUES(${source.id},${url},${title},${published},${fingerprint},'new',${image?"hero:"+image:null})
+          VALUES(${source.id},${url},${title},${published},${fingerprint},'new',${image?"hero:"+image:(description?"meta:"+description.slice(0,500):"image_pending")})
           ON CONFLICT DO NOTHING RETURNING id`;
         if(rows.length){inserted++;if(image)withImage++}
       }catch(err){console.warn("candidate failed",url,err?.message||err)}
