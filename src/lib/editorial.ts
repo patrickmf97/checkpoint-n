@@ -26,7 +26,8 @@ export function priority(title:string,published?:string|null){
  return p;
 }
 export function buildDraft(title:string,description:string,sourceUrl:string,sourceName:string){
- const excerpt=(description||("Acompanhe os principais detalhes de "+title+" e o que a novidade representa para jogadores Nintendo.")).slice(0,260);
- const body=[excerpt,"","O que foi anunciado","",description||"A fonte oficial confirmou a novidade. A redação deve complementar este trecho com os detalhes essenciais antes da publicação.","","O que você precisa saber","","Confira datas, disponibilidade, plataformas, preços e condições na fonte oficial. Acrescente contexto próprio do Checkpoint N antes de publicar.","","Fonte: "+sourceName+" — "+sourceUrl].join("\n");
+ const clean=(description||"").replace(/\s+/g," ").replace(/\s*(?:…|\.\.\.)\s*$/,"").trim();
+ const excerpt=(clean||("Novidade oficial relacionada a "+title+".")).slice(0,260);
+ const body=clean||("A "+sourceName+" divulgou uma novidade sobre "+title+".");
  return {excerpt,body,seoTitle:title.slice(0,70),seoDescription:excerpt.slice(0,160)};
 }
