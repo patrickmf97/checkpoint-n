@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "node scripts/publish-reviewed.mjs && next start",
+    "start": "next start",
     "editorial:collect": "node scripts/editorial-worker.mjs"
   },
   "dependencies": {
