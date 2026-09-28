@@ -10,7 +10,7 @@ export async function POST(req:Request){
  const item=rows[0];if(!item)return NextResponse.json({error:"not found"},{status:404});
  let meta:any={title:"",description:"",hero:""};
  try{const r=await fetch(item.source_url,{headers:{"user-agent":"CheckpointNEditorial/2.0"},cache:"no-store"});if(r.ok)meta=extractMeta(await r.text(),item.source_url)}catch{}
- const title=cleanTitle(meta.title||String(item.source_title)),slug=slugify(title),draft=buildDraft(title,meta.description,item.source_url,item.source_name||"Fonte oficial");
+ const title=cleanTitle(meta.title||String(item.source_title)).replace(/^Experimente o teste de jogo mais recente,?\\s*/i,"Teste grátis: "),slug=slugify(title),draft=buildDraft(title,meta.description,item.source_url,item.source_name||"Fonte oficial");
  const dupe=await sql`SELECT id FROM articles WHERE (source_url=${item.source_url} OR slug=${slug}) AND status<>'archived' LIMIT 1`;
  const inserted=await sql`INSERT INTO articles(slug,title,excerpt,body,type,status,source_label,source_url,hero_url,seo_title,seo_description,featured) VALUES (${slug},${title},${draft.excerpt},${draft.body},${"news"},${"draft"},${item.source_name||"Fonte oficial"},${item.source_url},${meta.hero||null},${draft.seoTitle},${draft.seoDescription},false) ON CONFLICT(slug) DO UPDATE SET source_label=EXCLUDED.source_label,source_url=EXCLUDED.source_url,hero_url=COALESCE(articles.hero_url,EXCLUDED.hero_url),seo_title=COALESCE(articles.seo_title,EXCLUDED.seo_title),seo_description=COALESCE(articles.seo_description,EXCLUDED.seo_description) RETURNING id`;
  await sql`UPDATE editorial_inbox SET status=${"drafted"},notes=${meta.hero?"hero:"+meta.hero:(dupe.length?"duplicate":"image_pending")},updated_at=now() WHERE id=${id}`;
