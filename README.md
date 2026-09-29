@@ -9,3 +9,5 @@ Next.js + TypeScript + Neon PostgreSQL + Vercel.
 Copie `.env.example` para `.env.local`, configure `DATABASE_URL`, execute `npm install` e `npm run dev`.
 
 > Checkpoint N é um veículo independente e não possui vínculo, patrocínio ou associação com a Nintendo.
+
+<!-- deploy-sync: 2026-09-29 checkpoint-n web -->
