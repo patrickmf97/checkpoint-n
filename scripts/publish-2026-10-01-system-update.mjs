@@ -52,3 +52,5 @@ const rows=await sql`INSERT INTO articles(slug,title,excerpt,body,type,status,au
 VALUES(${item.slug},${item.title},${item.excerpt},${item.body},'news','published','Checkpoint N',${item.sourceLabel},${item.source},${meta.image},${item.seoTitle},${item.seoDescription},false,now())
 RETURNING id,slug,title,hero_url,published_at`;
 console.log("PUBLISHED",JSON.stringify(rows[0]));
+
+// publisher configured for one-shot execution
