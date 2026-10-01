@@ -1,4 +1,5 @@
-import {SafeImage} from "@/components/SafeImage";"use client";
+"use client";
+import {SafeImage} from "@/components/SafeImage";
 import {useMemo,useState} from "react";
 import {Search,SlidersHorizontal} from "lucide-react";
 
