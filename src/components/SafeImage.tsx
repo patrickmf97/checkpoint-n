@@ -1,0 +1,3 @@
+"use client";
+import {useState} from "react";
+export function SafeImage({src,alt="",className,loading="lazy"}:{src?:string|null;alt?:string;className?:string;loading?:"lazy"|"eager"}){const [failed,setFailed]=useState(false);if(!src||failed)return <div className={["mediaFallback",className].filter(Boolean).join(" ")} aria-label={alt||"Imagem indisponível"}>N</div>;return <img src={src} alt={alt} className={className} loading={loading} onError={()=>setFailed(true)}/>}
