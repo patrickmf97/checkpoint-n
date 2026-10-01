@@ -31,3 +31,4 @@ export default function RootLayout({children}:{children:React.ReactNode}){
   </footer>
  </body></html>
 }
+// production-sync: 2026-09-30 redesign-and-image-fixes
