@@ -1,4 +1,4 @@
-import {ArrowRight,BookOpen,CalendarDays,Clock3,Gamepad2,Newspaper,ShoppingBag,Tag,Zap} from "lucide-react";
+import {SafeImage} from "@/components/SafeImage";import {ArrowRight,BookOpen,CalendarDays,Clock3,Gamepad2,Newspaper,ShoppingBag,Tag,Zap} from "lucide-react";
 import {getArticles,getGames,getOffers} from "@/lib/content";
 
 export const dynamic="force-dynamic";
@@ -61,7 +61,7 @@ export default async function Home(){
       <div className="featureGrid">
         <a className="featureMain" href={"/noticias/"+featured[0].slug}>
           <div className="featureMedia">
-            {featured[0].hero_url?<img src={featured[0].hero_url} alt={featured[0].title}/>:<div className="mediaFallback">N</div>}
+            <SafeImage src={featured[0].hero_url} alt={featured[0].title}/>
           </div>
           <div className="featureCopy">
             <small>{featured[0].category||"NINTENDO"} · DESTAQUE</small>
@@ -72,7 +72,7 @@ export default async function Home(){
         </a>
         <div className="featureSide">
           {featured.slice(1).map((a:any)=><a className="featureSideCard" href={"/noticias/"+a.slug} key={a.id}>
-            {a.hero_url?<img src={a.hero_url} alt="" loading="lazy"/>:<div className="mediaFallback small">N</div>}
+            <SafeImage src={a.hero_url} alt={a.title} loading="lazy"/>
             <div><small>{a.category||"NINTENDO"}</small><h3>{a.title}</h3><span>{formatDate(a.published_at)}</span></div>
           </a>)}
         </div>
@@ -86,7 +86,7 @@ export default async function Home(){
       </div>
       <div className="newsGrid">
         {latestNews.map((a:any)=><a className="newsCard" href={"/noticias/"+a.slug} key={a.id}>
-          {a.hero_url?<img src={a.hero_url} alt="" loading="lazy"/>:<div className="mediaFallback news">N</div>}
+          <SafeImage src={a.hero_url} alt={a.title} loading="lazy"/>
           <div><small>{a.category||"NINTENDO"} · {formatDate(a.published_at)}</small><h3>{a.title}</h3><p>{a.excerpt}</p></div>
         </a>)}
       </div>
@@ -99,7 +99,7 @@ export default async function Home(){
       </div>
       <div className="homeGameGrid">
         {featuredGames.map((g:any)=><a className="homeGameCard" href={"/jogos/"+g.slug} key={g.id}>
-          {g.cover_url?<img src={g.cover_url} alt={"Capa de "+g.title} loading="lazy"/>:<div className="mediaFallback coverFallback">{g.title.slice(0,1)}</div>}
+          <SafeImage src={g.cover_url} alt={"Capa de "+g.title} loading="lazy"/>
           <div className="homeGameCopy"><small>{(g.platforms||[]).join(" · ")||"NINTENDO"}</small><h3>{g.title}</h3><p>{g.excerpt}</p><span>Ver jogo <ArrowRight size={15}/></span></div>
         </a>)}
       </div>
@@ -112,7 +112,7 @@ export default async function Home(){
       </div>
       <div className="guideGrid">
         {recentGuides.map((g:any)=><a className="guideCard" href={"/guias/"+g.slug} key={g.id}>
-          {g.hero_url?<img src={g.hero_url} alt="" loading="lazy"/>:<div className="mediaFallback guide">GUIA</div>}
+          <SafeImage src={g.hero_url} alt={g.title} loading="lazy"/>
           <div><small>{g.game_title||g.category||"GUIA"}</small><h3>{g.title}</h3><p>{g.excerpt}</p><span>Abrir guia <ArrowRight size={15}/></span></div>
         </a>)}
       </div>
