@@ -43,13 +43,23 @@ if(dupe.length){
   console.log("DUPLICATE",JSON.stringify(dupe[0]));
   process.exit(0);
 }
-const meta=await pageMeta(item.source);
-if(!await validImage(meta.image)){
-  console.log("IMAGE_INVALID_SKIP",meta.image);
+const imagePages=[
+  "https://www.nintendo.com/pt-br/gaming-systems/switch-2/",
+  "https://www.nintendo.com/us/gaming-systems/switch-2/"
+];
+let hero=null;
+for(const url of imagePages){
+  try{
+    const candidate=(await pageMeta(url)).image;
+    if(await validImage(candidate)){hero=candidate;break}
+  }catch{}
+}
+if(!hero){
+  console.log("IMAGE_INVALID_SKIP");
   process.exit(2);
 }
 const rows=await sql`INSERT INTO articles(slug,title,excerpt,body,type,status,author_name,source_label,source_url,hero_url,seo_title,seo_description,featured,published_at)
-VALUES(${item.slug},${item.title},${item.excerpt},${item.body},'news','published','Checkpoint N',${item.sourceLabel},${item.source},${meta.image},${item.seoTitle},${item.seoDescription},false,now())
+VALUES(${item.slug},${item.title},${item.excerpt},${item.body},'news','published','Checkpoint N',${item.sourceLabel},${item.source},${hero},${item.seoTitle},${item.seoDescription},false,now())
 RETURNING id,slug,title,hero_url,published_at`;
 console.log("PUBLISHED",JSON.stringify(rows[0]));
 
