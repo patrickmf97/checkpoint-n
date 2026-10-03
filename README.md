@@ -11,3 +11,6 @@ Copie `.env.example` para `.env.local`, configure `DATABASE_URL`, execute `npm i
 > Checkpoint N é um veículo independente e não possui vínculo, patrocínio ou associação com a Nintendo.
 
 <!-- deploy-sync: 2026-09-29 checkpoint-n web -->
+
+
+<!-- editorial-radar-trigger: 2026-10-03T12:03-03:00 -->
